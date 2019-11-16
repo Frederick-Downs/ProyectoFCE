@@ -46,42 +46,6 @@ public class DT_user
 	}
 	
 	
-	//Metodo para validar si existe el usuario del Login
-	public boolean validarUsuario(String carne, String contrasena)
-	{
-		
-		
-		Tbl_usuario tus  = new Tbl_usuario();
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT carne, contrasena from tbl_usuario where carne = ? and estado <>3", 
-					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, 
-					ResultSet.HOLD_CURSORS_OVER_COMMIT);
-			ps.setString(1, carne);
-			rsUsuario = ps.executeQuery();
-			if(rsUsuario.next())
-			{
-				tus.setCarne(rsUsuario.getString("carne"));
-				tus.setContrasena(rsUsuario.getString("contrasena"));
-			}
-			
-			if(tus.getCarne().equals(carne) && tus.getContrasena().equals(contrasena)) {
-				return true;
-			}
-			else {
-				return false;
-			}
-			
-		}
-		catch (Exception e)
-		{
-			System.out.println("DATOS: ERROR en Validar usuario "+ e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
-		
-	}
-	
 	public boolean guardarUser(Tbl_usuario tus)
 	{
 		boolean guardado = false;
@@ -308,33 +272,6 @@ public class DT_user
 		
 		return existe;
 	}
-	
-	public boolean existeCorreo(String correo)
-	{
-		boolean existe = false;
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT * from tbl_usuario where correo = ?", 
-					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, 
-					ResultSet.HOLD_CURSORS_OVER_COMMIT);
-			ps.setString(1, correo);
-			rsUsuario = ps.executeQuery();
-			if(rsUsuario.next())
-			{
-				existe = true;
-			}
-		}
-
-		catch (Exception e)
-		{
-			System.out.println("DATOS: ERROR en existeCorreo() "+ e.getMessage());
-			e.printStackTrace();
-		}
-		
-		return existe;
-	}
-
-
 	
 }
 
